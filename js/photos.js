@@ -1,3 +1,5 @@
+import {showBigPicture} from './show-big-photo.js';
+
 const pictures = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
@@ -7,6 +9,13 @@ const installPhotoInGallery = (photo) => {
   pictureElement.querySelector('.picture__img').alt = photo.description;
   pictureElement.querySelector('.picture__likes').textContent = photo.likes;
   pictureElement.querySelector('.picture__comments').textContent = photo.comments.length;
+
+  const onPictureElementClick = (evt) => {
+    evt.preventDefault();
+    showBigPicture(photo);
+  };
+
+  pictureElement.addEventListener('click', onPictureElementClick);
   return pictureElement;
 };
 

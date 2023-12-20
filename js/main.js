@@ -1,6 +1,10 @@
-import {photos, descriptions, messages, names} from '/.data.js';
+import {photos, descriptions, messages, names} from './data.js';
 
-import {randomInteger} from '/.util.js';
+import {randomInteger} from './util.js';
+
+import {installPhotosInGallery} from './photos.js';
+
+installPhotosInGallery(photos);
 
 const COUNT_PHOTO =  25;
 
