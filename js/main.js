@@ -54,5 +54,3 @@ const addPhotos = () => {
 };
 
 addPhotos();
-
-
