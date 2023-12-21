@@ -4,6 +4,12 @@ import {randomInteger} from './util.js';
 
 import {installPhotosInGallery} from './photos.js';
 
+import './effects.js';
+
+import './form-style.js';
+
+import './form.js';
+
 installPhotosInGallery(photos);
 
 const COUNT_PHOTO =  25;
