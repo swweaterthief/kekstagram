@@ -1,4 +1,4 @@
-import { onDocumentEscKeyDown } from './util.js';
+import { isEscapeKey } from './util.js';
 
 const COUNT_COMMENTS_UNDER_PHOTO = 5;
 
@@ -64,12 +64,12 @@ const closeBigPicture = () => {
   document.body.classList.remove('modal-open');
 };
 
-document.addEventListener('keydown', onDocumentEscKeyDown(closeBigPicture));
+document.addEventListener('keydown', isEscapeKey(closeBigPicture));
 
 const onCloseBigPictureClick = () => {
   closeBigPicture();
 
-  document.removeEventListener('keydown', onDocumentEscKeyDown);
+  document.removeEventListener('keydown', isEscapeKey);
   pictureCloseButton.removeEventListener('click', onCloseBigPictureClick);
 };
 
@@ -89,7 +89,7 @@ const showBigPicture = (photo) => {
 
   loadComments.addEventListener('keydown', onLoadCommentsButtonClick);
 
-  document.addEventListener('keydown', onDocumentEscKeyDown);
+  document.addEventListener('keydown', isEscapeKey);
   pictureCloseButton.addEventListener('click', onCloseBigPictureClick);
 };
 
