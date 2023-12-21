@@ -1,4 +1,5 @@
 import {isEscapeKey} from './util.js';
+import {uploadData} from './fetch.js';
 
 const Zoom = {
   MIN: 25,
@@ -15,7 +16,8 @@ const minusButton = body.querySelector('.scale__control--smaller');
 const plusButton = body.querySelector('scale__control--bigger');
 const scaleControlValue = body.querySelector('.scale__control--value');
 const imagePreview = body.querySelector('.img-upload__preview');
-
+const errorMessage = body.querySelector('.error__inner');
+const successMessage = body.querySelector('.success__inner');
 
 const onFormUploadCloseClick = () => {
   overlay.classList.add('hidden');
@@ -70,5 +72,45 @@ const onPlusButtonClick = () => {
 
 minusButton.addeventListener('click', onMinusButtonClick);
 plusButton.addEventListener('click', onPlusButtonClick);
+
+const onPopupClick = (evt) => {
+  if (!evt.target.classList.contains('success__inner') && !evt.target.classList.contains('error__inner')){
+    evt.preventDefault();
+    onFormUploadCloseClick();
+    document.removeEventListener('keydown', onCloseFormEscKeyDown);
+  }
+};
+
+const showMessage = (message) => {
+  message.addEventListener('click', onPopupClick);
+  document.body.appendChild(message);
+  document.addEventListener('keydown', onCloseFormEscKeyDown);
+};
+
+const showErrorMessage = () => {
+  const messageFragment = errorMessage.cloneNode(true);
+  showMessage(messageFragment);
+};
+
+const showSuccessMessage = () => {
+  const messageFragment = successMessage.cloneNode(true);
+  showMessage(messageFragment);
+};
+
+const onError = () => {
+  showErrorMessage();
+};
+
+const onSuccess = () => {
+  onFormUploadCloseClick();
+  showSuccessMessage();
+};
+
+const onFormUploadSubmit = (evt) => {
+  evt.preventDefault();
+  uploadData(onSuccess, onError, 'POST', new FormData(evt.target));
+};
+
+formUpload.addEventListener('submit', onFormUploadSubmit);
 
 export {formUpload, onFormUploadCloseClick};

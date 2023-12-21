@@ -1,14 +1,10 @@
 import {photos, descriptions, messages, names} from './data.js';
-
 import {randomInteger} from './util.js';
-
 import {installPhotosInGallery} from './photos.js';
-
 import './effects.js';
-
 import './form-style.js';
-
 import './form.js';
+import {loadData} from './fetch.js';
 
 installPhotosInGallery(photos);
 
@@ -60,3 +56,27 @@ const addPhotos = () => {
 };
 
 addPhotos();
+
+let photo = [];
+
+const onSuccess = (data) => {
+  photo = data.slice();
+  installPhotosInGallery(photo);
+};
+
+const onError = () => {
+  const messageAlert = document.creareElement('div');
+  messageAlert.style.position = 'absolute';
+  messageAlert.style.left = 0;
+  messageAlert.style.top = 0;
+  messageAlert.style.right = 0;
+  messageAlert.style.fontSize = '30px';
+  messageAlert.style.backgroundColor = 'red';
+  messageAlert.style.textAlign = 'center';
+  messageAlert.textContent = 'Ошибка загрузки фотографии';
+  document.body.append(messageAlert);
+};
+
+loadData(onSuccess, onError);
+
+export {photos};
