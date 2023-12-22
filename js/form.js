@@ -9,11 +9,11 @@ const Zoom = {
 
 const body = document.querySelector('body');
 const overlay= body.querySelector('.img-upload__overlay');
-const formUpload = body.querySelector('img-upload__form');
+const formUpload = body.querySelector('.img-upload__form');
 const formUploadClose = body.querySelector('#upload-cancel');
 const fileUpload = body.querySelector('#upload-file');
 const minusButton = body.querySelector('.scale__control--smaller');
-const plusButton = body.querySelector('scale__control--bigger');
+const plusButton = body.querySelector('.scale__control--bigger');
 const scaleControlValue = body.querySelector('.scale__control--value');
 const imagePreview = body.querySelector('.img-upload__preview');
 const errorMessage = body.querySelector('.error__inner');
@@ -70,7 +70,7 @@ const onPlusButtonClick = () => {
   changeZoom();
 };
 
-minusButton.addeventListener('click', onMinusButtonClick);
+minusButton.addEventListener('click', onMinusButtonClick);
 plusButton.addEventListener('click', onPlusButtonClick);
 
 const onPopupClick = (evt) => {

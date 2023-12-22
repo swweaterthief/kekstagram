@@ -16,6 +16,7 @@ const pristine = new Pristine(formUpload, {
   errorTextClass: 'img-upload__error',
 });
 
+
 let errorMessage = '';
 
 const error = () => errorMessage;
