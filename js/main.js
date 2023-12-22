@@ -1,5 +1,4 @@
-import {photos, descriptions, messages, names} from './data.js';
-import {randomInteger} from './util.js';
+import {randomInteger, photos, descriptions, messages, names} from './util.js';
 import {installPhotosInGallery} from './photos.js';
 import './effects.js';
 import './form-style.js';
