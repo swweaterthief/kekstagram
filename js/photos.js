@@ -1,4 +1,4 @@
-import {showBigPicture} from './show-big-photo.js';
+import {showBigPicture} from './big-photo.js';
 
 const pictures = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
@@ -27,4 +27,8 @@ const installPhotosInGallery = (photos) => {
   pictures.appendChild(fragment);
 };
 
-export {installPhotosInGallery};
+const clearGallery = () => {
+  pictures.querySelectorAll('.picture').forEach((pic) => pic.remove());
+};
+
+export {installPhotosInGallery, clearGallery};

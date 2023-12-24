@@ -15,8 +15,8 @@ const sliderElement = uploadForm.querySelector('.effect-level__slider');
 const sliderUpload = uploadForm.querySelector('.img-upload__effect-level');
 const effectsList = uploadForm.querySelector('.effects__list');
 const effectLevelValue = uploadForm.querySelector('.effect-level__value');
-const imagePreview = uploadForm.querySelector('img-upload__preview');
-const image = imagePreview.querySelector('.img');
+const imagePreview = document.querySelector('.img-upload');
+const image = imagePreview.querySelector('.img-upload__preview img');
 
 effectLevelValue.value = DEFAULT_EFFECT_LEVEL;
 let currentEffect = '';

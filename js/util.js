@@ -1,9 +1,3 @@
-const randomInteger = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
-
-const DELAY = 500;
-
-export {randomInteger};
-
 const Keys = {
   ESCAPE: 'Escape',
   ESC: 'Esc',
@@ -15,7 +9,8 @@ const isEscapeKey = (callback) => (evt) => {
   }
 };
 
-export {isEscapeKey};
+const DELAY = 500;
+
 
 const debounce = (cb) => {
   let lastTimeout = null;
@@ -38,6 +33,5 @@ const shuffleArray = (array) => {
   return array;
 };
 
-export {debounce};
 
-export {shuffleArray};
+export {debounce, shuffleArray, isEscapeKey};
