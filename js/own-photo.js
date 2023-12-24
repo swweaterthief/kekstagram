@@ -3,6 +3,7 @@ const uploadFile = document.querySelector('#upload-file');
 const preview = document.querySelector('.img-upload__preview img');
 const effectList = document.querySelector('.effects__list');
 const smallImages = effectList.querySelectorAll('span');
+import './hashtags-pristine.js';
 
 const onUploadImageChange = () => {
   const file = uploadFile.files[0];

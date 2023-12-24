@@ -1,20 +1,18 @@
-import Pristine from '/vendor/pristine/pristine.js';
-
 const MAX_SYMBOLS = 20;
 const MAX_HASHTAGS = 5;
 
-const formUpload = document.querySelector('.img-upload__from');
+const formUpload = document.querySelector('.img-upload__form');
 const inputHashtag = document.querySelector('.text__hashtags');
-const submitBttn = document.querySelector('.#upload-submit');
+const submitBttn = document.querySelector('#upload-submit');
 
 const pristine = new Pristine(formUpload, {
-  classTo: 'img-upload__item',
-  errorClass: 'img-upload__item--invalid',
-  successClass: 'img-upload__item--valid',
-  errorTextParent: 'img-upload__item',
+  classTo: 'img-upload__field-wrapper',
+  errorClass: 'img-upload--invalid',
+  successClass: 'img-upload--valid',
+  errorTextParent: 'img-upload__field-wrapper',
   errorTextTag: 'div',
-  errorTextClass: 'img-upload__error',
-});
+  errorTextClass: 'img-upload__error'
+}, true);
 
 
 let errorMessage = '';
@@ -76,9 +74,9 @@ pristine.addValidator(inputHashtag, hashtagHandler, error, 2, false);
 
 const onHashtagInput = () => {
   if (pristine.validate()) {
-    submitBttn.disabled = true;
-  } else {
     submitBttn.disabled = false;
+  } else {
+    submitBttn.disabled = true;
   }
 };
 
@@ -86,8 +84,8 @@ inputHashtag.addEventListener('input', onHashtagInput);
 
 formUpload.addEventListener('submit', (evt) => {
   evt.preventDefault();
-
+  onHashtagInput(evt);
   pristine.validate();
 });
 
-export {inputHashtag};
+

@@ -1,9 +1,9 @@
 import {installPhotosInGallery} from './photos.js';
-import './effects.js';
-import './form.js';
 import {loadData} from './fetch.js';
 import './filter.js';
 import './own-photo.js';
+import './effects.js';
+import './form.js';
 
 let photos = [];
 

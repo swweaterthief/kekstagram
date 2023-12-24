@@ -11,7 +11,12 @@ const sendRequest = (onSuccess, onError, method, body) => {
       body: body,
     },
   )
-    .then((response) => response.json())
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error(response.status.toString());
+      }})
     .then((data) => {
       onSuccess(data);
     })
