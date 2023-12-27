@@ -7,22 +7,22 @@ const Zoom = {
   STEP: 25,
 };
 
-const body = document.querySelector('body');
-const overlay = body.querySelector('.img-upload__overlay');
-const formUpload = body.querySelector('.img-upload__form');
-const formUploadClose = body.querySelector('#upload-cancel');
-const fileUpload = body.querySelector('#upload-file');
-const submitButton = body.querySelector('#upload-submit');
-const minusButton = body.querySelector('.scale__control--smaller');
-const plusButton = body.querySelector('.scale__control--bigger');
-const scaleControlValue = body.querySelector('.scale__control--value');
-const imagePreview = body.querySelector('.img-upload__preview');
-const errorMessage = body.querySelector('#error');
-const successMessage = body.querySelector('#success');
+const formUpload = document.querySelector('.img-upload__form');
+const overlay = formUpload.querySelector('.img-upload__overlay');
+const formUploadClose = formUpload.querySelector('#upload-cancel');
+const fileUpload = formUpload.querySelector('#upload-file');
+const submitButton = formUpload.querySelector('#upload-submit');
+const minusButton = formUpload.querySelector('.scale__control--smaller');
+const plusButton = formUpload.querySelector('.scale__control--bigger');
+const scaleControlValue = formUpload.querySelector('.scale__control--value');
+const imagePreview = formUpload.querySelector('.img-upload__preview');
+
+const errorMessage = document.querySelector('#error');
+const successMessage = document.querySelector('#success');
 
 const onFormUploadCloseClick = () => {
   overlay.classList.add('hidden');
-  body.classList.remove('modal-open');
+
   document.removeEventListener('keydown', onCloseFormEscKeyDown);
 };
 
@@ -35,17 +35,6 @@ function onCloseFormEscKeyDown(evt) {
     onFormUploadCloseClick();
   }
 }
-
-const onFileUploadChange = () => {
-  overlay.classList.remove('hidden');
-  body.classList.add('modal-open');
-
-  document.addEventListener('keydown', onCloseFormEscKeyDown);
-};
-
-fileUpload.addEventListener('change', onFileUploadChange);
-
-formUploadClose.addEventListener('click', onFormUploadCloseClick);
 
 const changeZoom = (factor = 1) => {
   let size = parseInt(scaleControlValue.value, 10) + (Zoom.STEP * factor);
@@ -61,6 +50,17 @@ const changeZoom = (factor = 1) => {
   scaleControlValue.value = `${size}%`;
   imagePreview.style.transform = `scale(${size / 100})`;
 };
+
+const onFileUploadChange = () => {
+  overlay.classList.remove('hidden');
+  document.body.classList.add('modal-open');
+  document.addEventListener('keydown', isEscapeKey(onCloseFormEscKeyDown));
+  changeZoom(4);
+};
+
+fileUpload.addEventListener('change', onFileUploadChange);
+
+formUploadClose.addEventListener('click', onFormUploadCloseClick);
 
 const onMinusButtonClick = () => {
   changeZoom(-1);

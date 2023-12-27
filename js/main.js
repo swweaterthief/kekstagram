@@ -14,7 +14,7 @@ const onSuccess = (data) => {
 };
 
 const onError = () => {
-  const messageAlert = document.creareElement('div');
+  const messageAlert = document.createElement('div');
   messageAlert.style.position = 'absolute';
   messageAlert.style.left = 0;
   messageAlert.style.top = 0;
@@ -22,7 +22,7 @@ const onError = () => {
   messageAlert.style.fontSize = '30px';
   messageAlert.style.backgroundColor = 'red';
   messageAlert.style.textAlign = 'center';
-  messageAlert.textContent = 'Ошибка загрузки фотографии';
+  messageAlert.textContent = 'Ошибка загрузки фотографий';
   document.body.append(messageAlert);
 };
 

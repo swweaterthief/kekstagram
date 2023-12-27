@@ -8,21 +8,20 @@ const likesCount = bigPicture.querySelector('.likes-count');
 const descriptionOfTheBigPicture = bigPicture.querySelector('.social__caption');
 const socialComments = bigPicture.querySelector('.social__comments');
 const socialCommentsCount = bigPicture.querySelector('.social__comment-count');
-const loadComments = bigPicture.querySelector('.comments-loader');
+const loadComments = bigPicture.querySelector('.social__comments-loader');
 const pictureCloseButton = bigPicture.querySelector('.big-picture__cancel');
+const footerText = bigPicture.querySelector('.social__footer-text');
 
 let commentsCount = COUNT_COMMENTS_UNDER_PHOTO;
 let currentComments = [];
 
 const generateCommentsUnderPhoto = () => {
-  socialComments.innerHTML = '';
 
   commentsCount = (commentsCount > currentComments.length) ? currentComments.length : commentsCount;
 
   const commentsSelected = currentComments.slice(0, commentsCount);
-
   if (currentComments.length <= COUNT_COMMENTS_UNDER_PHOTO || commentsCount >= currentComments.length) {
-    loadComments.classListadd('hidden');
+    loadComments.classList.add('hidden');
   }
   else {
     loadComments.classList.remove('hidden');
@@ -62,6 +61,8 @@ const onLoadCommentsButtonClick = () => {
 const closeBigPicture = () => {
   bigPicture.classList.add('hidden');
   document.body.classList.remove('modal-open');
+  socialComments.textContent = '';
+  footerText.value = '';
 };
 
 document.addEventListener('keydown', isEscapeKey(closeBigPicture));
@@ -85,9 +86,11 @@ const showBigPicture = (photo) => {
 
   currentComments = comments.slice();
 
+  commentsCount = COUNT_COMMENTS_UNDER_PHOTO;
+
   generateCommentsUnderPhoto();
 
-  loadComments.addEventListener('keydown', onLoadCommentsButtonClick);
+  loadComments.addEventListener('click', onLoadCommentsButtonClick);
 
   document.addEventListener('keydown', isEscapeKey);
   pictureCloseButton.addEventListener('click', onCloseBigPictureClick);
