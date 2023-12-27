@@ -17,7 +17,7 @@ const pristine = new Pristine(formUpload, {
 
 let errorMessage = '';
 
-const error = () => errorMessage;
+const getErrorMessage = () => errorMessage;
 
 const hashtagHandler = (value) => {
   errorMessage = '';
@@ -70,7 +70,7 @@ const hashtagHandler = (value) => {
   });
 };
 
-pristine.addValidator(inputHashtag, hashtagHandler, error, 2, false);
+pristine.addValidator(inputHashtag, hashtagHandler, getErrorMessage, 2, false);
 
 const onHashtagInput = () => {
   if (pristine.validate()) {
@@ -82,6 +82,7 @@ const onHashtagInput = () => {
 
 inputHashtag.addEventListener('input', onHashtagInput);
 
+inputHashtag.addEventListener('keydown', (evt) => evt.stopPropagation());
 formUpload.addEventListener('submit', (evt) => {
   evt.preventDefault();
   onHashtagInput(evt);

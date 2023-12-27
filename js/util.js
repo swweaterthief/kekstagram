@@ -5,7 +5,7 @@ const Keys = {
 
 const isEscapeKey = (callback) => (evt) => {
   if (evt.key === Keys.ESCAPE || evt.key === Keys.ESC) {
-    callback();
+    callback(evt);
   }
 };
 
