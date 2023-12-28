@@ -1,4 +1,4 @@
-import { isEscapeKey } from './util.js';
+import {isEscapeKey} from './util.js';
 
 const COUNT_COMMENTS_UNDER_PHOTO = 5;
 
@@ -16,21 +16,16 @@ let commentsCount = COUNT_COMMENTS_UNDER_PHOTO;
 let currentComments = [];
 
 const generateCommentsUnderPhoto = () => {
-
   commentsCount = (commentsCount > currentComments.length) ? currentComments.length : commentsCount;
-
   const commentsSelected = currentComments.slice(0, commentsCount);
   if (currentComments.length <= COUNT_COMMENTS_UNDER_PHOTO || commentsCount >= currentComments.length) {
     loadComments.classList.add('hidden');
-  }
-  else {
+  } else {
     loadComments.classList.remove('hidden');
   }
-
   socialCommentsCount.innerHTML = `<span class="likes-count">${commentsCount} из ${currentComments.length} комментариев</span>`;
-
+  socialComments.textContent = '';
   const commentFragment = document.createDocumentFragment();
-
   commentsSelected.forEach((comment) => {
     const commentElement = document.createElement('li');
     const avatarElement = document.createElement('img');
@@ -39,17 +34,13 @@ const generateCommentsUnderPhoto = () => {
     commentElement.classList.add('social__comment');
     avatarElement.classList.add('social__picture');
     textElement.classList.add('social__text');
-
     avatarElement.src = comment.avatar;
     avatarElement.alt = comment.name;
     textElement.textContent = comment.message;
-
     commentElement.appendChild(avatarElement);
     commentElement.appendChild(textElement);
-
     commentFragment.appendChild(commentElement);
   });
-
   socialComments.appendChild(commentFragment);
 };
 
@@ -89,9 +80,7 @@ const showBigPicture = (photo) => {
   commentsCount = COUNT_COMMENTS_UNDER_PHOTO;
 
   generateCommentsUnderPhoto();
-
   loadComments.addEventListener('click', onLoadCommentsButtonClick);
-
   document.addEventListener('keydown', isEscapeKey);
   pictureCloseButton.addEventListener('click', onCloseBigPictureClick);
 };

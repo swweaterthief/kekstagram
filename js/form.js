@@ -1,5 +1,7 @@
 import {isEscapeKey} from './util.js';
 import {uploadData} from './fetch.js';
+import {pristine} from './validate.js';
+import {effects} from './effects.js';
 
 const Zoom = {
   MIN: 25,
@@ -8,32 +10,46 @@ const Zoom = {
 };
 
 const formUpload = document.querySelector('.img-upload__form');
+const hashtagsInput = formUpload.querySelector('.text__hashtags');
+const descriptionInput = formUpload.querySelector('.text__description');
+const formUploadInput = formUpload.querySelector('.img-upload__input');
 const overlay = formUpload.querySelector('.img-upload__overlay');
 const formUploadClose = formUpload.querySelector('#upload-cancel');
-const fileUpload = formUpload.querySelector('#upload-file');
 const submitButton = formUpload.querySelector('#upload-submit');
 const minusButton = formUpload.querySelector('.scale__control--smaller');
 const plusButton = formUpload.querySelector('.scale__control--bigger');
 const scaleControlValue = formUpload.querySelector('.scale__control--value');
 const imagePreview = formUpload.querySelector('.img-upload__preview');
-
 const errorMessage = document.querySelector('#error');
 const successMessage = document.querySelector('#success');
 
-const onFormUploadCloseClick = () => {
-  overlay.classList.add('hidden');
+const resetForm = () => {
+  formUpload.reset();
+  pristine.reset();
+  effects.reset();
+  imagePreview.src = 'img/upload-default-image.jpg';
+  document.querySelector('.effects__list').querySelectorAll('span').forEach((evt) => {
+    evt.style.backgroundImage = 'url(img/upload-default-image.jpg)';
+  });
+  submitButton.removeAttribute('disabled');
+};
 
-  document.removeEventListener('keydown', onCloseFormEscKeyDown);
+const onFormClose = () => {
+  overlay.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+  document.removeEventListener('keydown', isEscapeKey(onCloseFormEscKeyDown));
+  formUploadInput.value = null;
+};
+
+const onCloseButtonClick = () => {
+  resetForm();
+  onFormClose();
 };
 
 function onCloseFormEscKeyDown(evt) {
-  if (isEscapeKey(evt) &&
-    !evt.target.classList.contains('text__hashtags') &&
-    !evt.target.classList.contains('text__description')
-  ) {
-    evt.preventDefault();
-    onFormUploadCloseClick();
-  }
+  evt.preventDefault();
+  resetForm();
+  onFormClose();
 }
 
 const changeZoom = (factor = 1) => {
@@ -51,16 +67,18 @@ const changeZoom = (factor = 1) => {
   imagePreview.style.transform = `scale(${size / 100})`;
 };
 
-const onFileUploadChange = () => {
+
+const onFormOpen = () => {
+  hashtagsInput.addEventListener('keydown', (evt) => evt.stopPropagation());
+  descriptionInput.addEventListener('keydown', (evt) => evt.stopPropagation());
   overlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', isEscapeKey(onCloseFormEscKeyDown));
   changeZoom(4);
 };
 
-fileUpload.addEventListener('change', onFileUploadChange);
-
-formUploadClose.addEventListener('click', onFormUploadCloseClick);
+formUploadInput.addEventListener('change', onFormOpen);
+formUploadClose.addEventListener('click', onCloseButtonClick);
 
 const onMinusButtonClick = () => {
   changeZoom(-1);
@@ -73,19 +91,11 @@ const onPlusButtonClick = () => {
 minusButton.addEventListener('click', onMinusButtonClick);
 plusButton.addEventListener('click', onPlusButtonClick);
 
-const resetForm = () => {
-  formUpload.reset();
-  imagePreview.src = 'img/upload-default-image.jpg';
-  document.querySelector('.effects__list').querySelectorAll('span').forEach((evt) => {
-    evt.style.backgroundImage = 'url(img/upload-default-image.jpg)';
-  });
-  submitButton.removeAttribute('disabled');
-};
 
 const onPopupClick = (evt) => {
   if (!evt.target.classList.contains('success__inner') && !evt.target.classList.contains('error__inner')) {
     evt.preventDefault();
-    onFormUploadCloseClick();
+    onFormClose();
     document.removeEventListener('keydown', onCloseFormEscKeyDown);
   }
 };
@@ -97,7 +107,7 @@ const removeMessage = () => {
   } else {
     document.querySelector('.success').remove();
   }
-  document.removeEventListener('keydown', onCloseFormEscKeyDown);
+  document.removeEventListener('keydown', removeMessage);
 };
 
 const showMessage = (message) => {
@@ -119,12 +129,12 @@ const showSuccessMessage = () => {
 
 
 const onError = () => {
-  onFormUploadCloseClick();
+  onFormClose();
   showErrorMessage();
 };
 
 const onSuccess = () => {
-  onFormUploadCloseClick();
+  onFormClose();
   showSuccessMessage();
   resetForm();
 };
@@ -137,4 +147,4 @@ const onFormUploadSubmit = (evt) => {
 
 formUpload.addEventListener('submit', onFormUploadSubmit);
 
-export {formUpload, onFormUploadCloseClick};
+export {formUpload, onFormClose};

@@ -24,6 +24,12 @@ let currentEffect = '';
 sliderUpload.classList.add('visually-hidden');
 
 const effects = {
+  reset: () => {
+    sliderUpload.classList.add('visually-hidden');
+    effectLevelValue.value = DEFAULT_EFFECT_LEVEL;
+    image.style.filter = 'none';
+    return 'none';
+  },
   none: () => {
     sliderUpload.classList.add('visually-hidden');
     return 'none';
